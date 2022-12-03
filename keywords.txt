@@ -5,13 +5,15 @@
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
-STATE_TABLE_ENTRY	eColour
+eColour	KEYWORD1
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
-
 SetLEDColour	KEYWORD2
-GetCurrentState	KEYWORD2
+InitDevice	KEYWORD2
+SetDeviceRed	KEYWORD2
+SetDeviceGreen	KEYWORD2
+SetDeviceBlue	KEYWORD2
 #######################################
 # Instances (KEYWORD2)
 #######################################
@@ -19,5 +21,19 @@ GetCurrentState	KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################
-
+BLACK	LITERAL1
+RED	LITERAL1
+GREEN	LITERAL1
+BLUE	LITERAL1
+CYAN	LITERAL1
+MAGENTA	LITERAL1
+YELLOW	LITERAL1
+WHITE	LITERAL1
+DARK_MAGENTA	LITERAL1
+GRAY	LITERAL1
+DARK_RED	LITERAL1
+DARK_GREEN	LITERAL1
+DARK_BLUE	LITERAL1
+DARK_YELLOW	LITERAL1
+DARK_CYAN	LITERAL1
 
