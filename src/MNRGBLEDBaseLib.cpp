@@ -81,8 +81,8 @@ void CRGBLED::SetDeviceBlue ( uint8_t strength )
 }
 /* If we are compiling on MKR WiFI 1010 with built in RGB LED the create derived class to control in and declare an instance as there is only one such LED */
 #ifdef ARDUINO_ARCH_SAMD
-const static int 	m_iRedPin              	= 26;
-const static int 	m_iGreenPin            	= 25;
+const static int 	m_iRedPin              	= 25;
+const static int 	m_iGreenPin            	= 26;
 const static int 	m_iBluePin            	= 27; 
 
 void CMkrWiFi1010RGBLED::InitDevice()
