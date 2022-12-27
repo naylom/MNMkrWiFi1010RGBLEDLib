@@ -81,27 +81,27 @@ void CRGBLED::SetDeviceBlue ( uint8_t strength )
 }
 /* If we are compiling on MKR WiFI 1010 with built in RGB LED the create derived class to control in and declare an instance as there is only one such LED */
 #ifdef ARDUINO_ARCH_SAMD
-const static int 	m_iRedPin              	= 25;
-const static int 	m_iGreenPin            	= 26;
-const static int 	m_iBluePin            	= 27; 
+const static int 	m_iMkrRedPin              	= 25;
+const static int 	m_iMkrGreenPin            	= 26;
+const static int 	m_iMkrBluePin				= 27; 
 
 void CMkrWiFi1010RGBLED::InitDevice()
 {
-	WiFiDrv::pinMode ( m_iRedPin,    OUTPUT );
-	WiFiDrv::pinMode ( m_iGreenPin,  OUTPUT );;
-	WiFiDrv::pinMode ( m_iBluePin,   OUTPUT );
+	WiFiDrv::pinMode ( m_iMkrRedPin,    OUTPUT );
+	WiFiDrv::pinMode ( m_iMkrGreenPin,  OUTPUT );
+	WiFiDrv::pinMode ( m_iMkrBluePin,   OUTPUT );
 }
 void 	CMkrWiFi1010RGBLED::SetDeviceRed ( uint8_t strength )
 {
-	WiFiDrv::analogWrite ( m_iRedPin, strength );
+	WiFiDrv::analogWrite ( m_iMkrRedPin, strength );
 }
 void    CMkrWiFi1010RGBLED::SetDeviceGreen ( uint8_t strength )
 {
-	WiFiDrv::analogWrite ( m_iGreenPin, strength );
+	WiFiDrv::analogWrite ( m_iMkrGreenPin, strength );
 }
 void    CMkrWiFi1010RGBLED::SetDeviceBlue ( uint8_t strength )
 {
-	WiFiDrv::analogWrite ( m_iBluePin, strength );
+	WiFiDrv::analogWrite ( m_iMkrBluePin, strength );
 }
 CMkrWiFi1010RGBLED	TheMKR_RGB_LED;
 #endif
