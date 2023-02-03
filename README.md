@@ -12,4 +12,4 @@ NB The built in RGB LED on the Mkr WiFi 1010 uses three pins to control the colo
 const static int 	m_iMkrRedPin              	= 25;
 const static int 	m_iMkrGreenPin            	= 26;
 
-in MNRGBBaseLib.cpp
+in MNRGBLEDBaseLib.cpp
