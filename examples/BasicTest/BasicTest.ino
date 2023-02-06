@@ -1,5 +1,13 @@
+//#define MKR_RGB_INVERT
 #include <MNRGBLEDBaseLib.h>
+/*
 
+Example for library showing how to use built in Mkr Wifi 1010 RGB LED and an external LED
+
+NB Some MKR wifi boards have red and green pins on built in LED inverted. There appears no way to detect this in code. If you find that the red and green colours are inverted
+then uncomment the first line with the #define. The library will then compensate. Note the #define must occur before the #include
+
+*/
 constexpr 	auto 			FLASHTIME 		= 10;					// every 2 seconds, ie 1 = 1/5 second
 const int	iRedPin              	= A4;
 const int 	iGreenPin            	= A5;
