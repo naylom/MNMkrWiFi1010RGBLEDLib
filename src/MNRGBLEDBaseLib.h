@@ -7,18 +7,11 @@
 #pragma once
 #include <arduino.h>
 /*
-    Some Mkr wifi 1010 boards have the built in LED red and green pins inverted, so if MKR_RGB_INVERT is defined *BEFORE* this include, the macros below will compensate
+    Some Mkr wifi 1010 boards have the built in LED red and green pins inverted, so if MKR_RGB_INVERT is defined the code will compensate
 */
-#if defined ARDUINO_ARCH_SAMD && defined (MKR_RGB_INVERT)
-#define RGB( G, R, B )      ( ( ( R & 0xff ) << 16 ) | ( ( G & 0xff ) << 8 ) | ( B & 0xff ) )   // takes three values each 0 - 255 to determine strength of RGB colour ands returns a combined value
-#define RGB_RED( RGBValue )     ( ( RGBValue & 0x00ff00 ) >> 8 )                               // extracts RED value from RGB value
-#define RGB_GREEN( RGBValue )   ( ( RGBValue & 0xff0000 ) >> 16 )                                // extracts GREEN value from RGB value
-#else
 #define RGB( R, G, B )      ( ( ( R & 0xff ) << 16 ) | ( ( G & 0xff ) << 8 ) | ( B & 0xff ) )   // takes three values each 0 - 255 to determine strength of RGB colour ands returns a combined value
 #define RGB_RED( RGBValue )     ( ( RGBValue & 0xff0000 ) >> 16 )                               // extracts RED value from RGB value
 #define RGB_GREEN( RGBValue )   ( ( RGBValue & 0x00ff00 ) >> 8 )                                // extracts GREEN value from RGB value
-#endif
-
 #define RGB_BLUE( RGBValue )    ( RGBValue & 0x0000ff )                                         // extract BLUE value from RGB Value
 typedef uint32_t RGBType;
 
