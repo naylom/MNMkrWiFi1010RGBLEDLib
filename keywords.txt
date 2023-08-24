@@ -6,6 +6,7 @@
 # Datatypes (KEYWORD1)
 #######################################
 eColour	KEYWORD1
+RGBType	KEYWORD1
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
