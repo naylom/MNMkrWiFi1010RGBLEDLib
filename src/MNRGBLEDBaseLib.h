@@ -61,9 +61,9 @@ class CRGBLED : public MNRGBLEDBaseLib
 		using MNRGBLEDBaseLib::MNRGBLEDBaseLib;
 
 	private:
-		int m_iRedPin;
-		int m_iGreenPin;
-		int m_iBluePin;
+		const int m_iRedPin;
+		const int m_iGreenPin;
+		const int m_iBluePin;
 
 	public:
 		CRGBLED ( const int iRedPin, const int iGreenPin, const int iBluePin, uint8_t maxRed = 255, uint8_t maxGreen = 255, uint8_t maxBlue = 255 ) : MNRGBLEDBaseLib ( maxRed, maxGreen, maxBlue ), m_iRedPin (iRedPin), m_iGreenPin ( iGreenPin ), m_iBluePin ( iBluePin ) {};
@@ -82,12 +82,21 @@ class CMkrWiFi1010RGBLED : public MNRGBLEDBaseLib
 	public:
 		using MNRGBLEDBaseLib::MNRGBLEDBaseLib;
 
+	private:
+		int m_iMkrRedPin = 26;
+		int m_iMkrGreenPin = 25;
+		int m_iMkrBluePin = 27;
+
 	public:
+		CMkrWiFi1010RGBLED (){};
 		void InitDevice ();
+		void Invert();
 		void SetDeviceRed ( uint8_t strength );
 		void SetDeviceGreen ( uint8_t strength );
 		void SetDeviceBlue ( uint8_t strength );
 };
 
+
 extern CMkrWiFi1010RGBLED TheMKR_RGB_LED;
+
 #endif

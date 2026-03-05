@@ -12,7 +12,6 @@ RGBType	KEYWORD1
 #######################################
 SetLEDColour	KEYWORD2
 InitDevice	KEYWORD2
-Invert	KEYWORD2
 SetDeviceRed	KEYWORD2
 SetDeviceGreen	KEYWORD2
 SetDeviceBlue	KEYWORD2
