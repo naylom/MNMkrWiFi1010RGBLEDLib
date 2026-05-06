@@ -1,6 +1,6 @@
 # MNMkrWiFi1010RGBLEDLib
 
-Arduino library to use either built in RGB LED on Mkr WiFi 1010 or an external RGB LED
+Arduino library to use either built in RGB LED on Mkr WiFi 1010 or an external RGB LED, extended to support an external rgb LED driven via a PCA98685 pwm driver.
 
 Defines a RGB macro to create a colour value and defines an enum to describe a number of preset colours for ease of use and RGBType to hold value
 
