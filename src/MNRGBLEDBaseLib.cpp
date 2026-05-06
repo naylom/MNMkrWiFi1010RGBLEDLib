@@ -1,4 +1,6 @@
 #include "MNRGBLEDBaseLib.h"
+
+#include <assert.h>
 #include <MNTimerLib.h>
 
 /// <summary>
@@ -15,15 +17,15 @@ void MNRGBLEDBaseLib::SetLEDColour ( RGBType theColour, uint32_t flashTime )
 	SetDeviceBlue ( RGB_BLUE ( theColour ) * m_maxBlue / 255 );
 	if ( m_bFlash )
 	{
-		TheTimer.RemoveCallBack ( (MNTimerClass *)this, (aMemberFunction)&MNRGBLEDBaseLib::Flash );
+		TheTimer.RemoveCallBack ( (MNTimerClass*)this, (aMemberFunction)&MNRGBLEDBaseLib::Flash );
 		m_bFlash = false;
 	}
 
 	if ( flashTime > 0 )
 	{
 		m_bFlash = true;
-		m_OnOff	 = 0;
-		TheTimer.AddCallBack ( (MNTimerClass *)this, (aMemberFunction)&MNRGBLEDBaseLib::Flash, flashTime / 10 * 2000 );
+		m_OnOff = 0;
+		TheTimer.AddCallBack ( (MNTimerClass*)this, (aMemberFunction)&MNRGBLEDBaseLib::Flash, flashTime / 10 * 2000 );
 	}
 }
 
@@ -50,7 +52,7 @@ void MNRGBLEDBaseLib::Flash ()
 }
 
 /*
-		CRGBLED derived class for 3 analog pin RGBs, note you need to create an instance  to use this class
+        CRGBLED derived class for 3 analog pin RGBs, note you need to create an instance  to use this class
 */
 
 void CRGBLED::InitDevice ()
@@ -75,19 +77,20 @@ void CRGBLED::SetDeviceBlue ( uint8_t strength )
 	analogWrite ( m_iBluePin, strength );
 }
 
-/* If we are compiling on MKR WiFI 1010 with built in RGB LED the create derived class to control in and declare an instance as there is only one such LED */
+/* If we are compiling on MKR WiFI 1010 with built in RGB LED the create derived class to control in and declare an
+ * instance as there is only one such LED */
 
 #ifdef ARDUINO_ARCH_SAMD
 /*
-	#ifdef MKR_RGB_INVERT
+    #ifdef MKR_RGB_INVERT
 const static int m_iMkrRedPin	= 25;
 const static int m_iMkrGreenPin = 26;
 const static int m_iMkrBluePin	= 27;
-	 #else
+     #else
 const static int m_iMkrRedPin	= 26;
 const static int m_iMkrGreenPin = 25;
 const static int m_iMkrBluePin	= 27;
-	 #endif
+     #endif
 */
 void CMkrWiFi1010RGBLED::InitDevice ()
 {
@@ -118,3 +121,59 @@ void CMkrWiFi1010RGBLED::SetDeviceBlue ( uint8_t strength )
 }
 CMkrWiFi1010RGBLED TheMKR_RGB_LED;
 #endif
+
+#if __has_include( <Adafruit_PWMServoDriver.h>)
+#include <Adafruit_PWMServoDriver.h>
+
+// Scale an 8-bit colour component (0-255) to a 12-bit PCA9685 level (0-4095).
+static inline uint16_t scaleToPca9685 ( uint8_t strength )
+{
+	return static_cast<uint16_t> ( strength ) * 4095U / 255U;
+}
+
+CPCA9685RGBLED::CPCA9685RGBLED ( Adafruit_PWMServoDriver& driver,
+                                 uint8_t redChannel,
+                                 uint8_t greenChannel,
+                                 uint8_t blueChannel,
+                                 bool commonAnode,
+                                 uint8_t maxRed,
+                                 uint8_t maxGreen,
+                                 uint8_t maxBlue )
+    : MNRGBLEDBaseLib ( maxRed, maxGreen, maxBlue ), _driver ( driver ), _redCh ( redChannel ),
+      _greenCh ( greenChannel ), _blueCh ( blueChannel ), _commonAnode ( commonAnode ), _initialized ( false )
+{
+}
+
+/**
+ * @brief Marks the driver as ready and sets all three channels to off.
+ * @details The Adafruit_PWMServoDriver::begin() must have been called and returned
+ *          true before this method is invoked. Asserts against double-initialisation.
+ */
+void CPCA9685RGBLED::InitDevice ()
+{
+	assert ( !_initialized );  // guard against double-initialisation
+	_driver.setPin ( _redCh,   0, _commonAnode );
+	_driver.setPin ( _greenCh, 0, _commonAnode );
+	_driver.setPin ( _blueCh,  0, _commonAnode );
+	_initialized = true;
+}
+
+void CPCA9685RGBLED::SetDeviceRed ( uint8_t strength )
+{
+	assert ( _initialized );
+	_driver.setPin ( _redCh, scaleToPca9685 ( strength ), _commonAnode );
+}
+
+void CPCA9685RGBLED::SetDeviceGreen ( uint8_t strength )
+{
+	assert ( _initialized );
+	_driver.setPin ( _greenCh, scaleToPca9685 ( strength ), _commonAnode );
+}
+
+void CPCA9685RGBLED::SetDeviceBlue ( uint8_t strength )
+{
+	assert ( _initialized );
+	_driver.setPin ( _blueCh, scaleToPca9685 ( strength ), _commonAnode );
+}
+
+#endif  // __has_include(<Adafruit_PWMServoDriver.h>)
