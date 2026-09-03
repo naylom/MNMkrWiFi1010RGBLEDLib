@@ -5,7 +5,7 @@
 //
 // Also uses the MNTimerLib library for flash functionality
 #pragma once
-#include <arduino.h>
+#include <Arduino.h>
 /*
     Some Mkr wifi 1010 boards have the built in LED red and green pins inverted, so if MKR_RGB_INVERT is defined the
    code will compensate
